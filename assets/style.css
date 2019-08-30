@@ -1,0 +1,30 @@
+body {
+    background-color: greenyellow;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    height: 100%;
+}
+
+#output {
+    border-style: solid;
+    margin-left: 60px;
+    margin-right: 60px;
+    height: 408px;
+    width: auto;
+    overflow: hidden;
+}
+
+.trainInfo {
+    border-style: solid;
+    height: 65px;
+    width: 647.5px;
+    position: relative;
+    float: left;
+}
+
+.tBox {
+    margin: 8px;
+}
