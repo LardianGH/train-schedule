@@ -25,6 +25,32 @@ var info = function() {
 
     event.preventDefault(); //stops page from refreshing
 
+    //sets all inputs to vars and gets desired outputs
+
+    var  trainName = $("#trainName").val() // train name
+
+    var destination = $("#destination").val() // stop name
+    
+    var firstTime = $("#firstTime").val() // start time (millitary)
+
+    var frequency = $("#Frequency").val() // frequency of train arrival
+
+    // Code for the push
+    dataRef.ref().push({
+        trainName: trainName,
+        destination: destination,
+        firstTime: firstTime,
+        frequency: frequency,
+        dateAdded: firebase.database.ServerValue.TIMESTAMP
+    });
+    }
+
+     //clears all textboxes
+     $("#trainName").val("");$("#destination").val("");$("#firstTime").val("");$("#Frequency").val("")
+};
+
+dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
+
     var trainInfo = $("<div>") //creates a div in memory
 
     var table = $("<table border = '1'>")
@@ -33,13 +59,14 @@ var info = function() {
 
     var header2 = $("<tr>")
 
-    //sets all inputs to vars and gets desired outputs
+    //hope this works
+    var  trainName = snapshot.val().trainName // train name
 
-    var  trainName = $("#trainName").val() // train name
-
-    var destination = $("#destination").val() // stop name
+    var destination = snapshot.val().destination // stop name
     
-    var firstTime = $("#firstTime").val() // start time (millitary)
+    var firstTime = snapshot.val().firstTime // start time (millitary)
+
+    var frequency = snapshot.val().frequency // frequency of train arrival
 
     var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
     console.log(firstTimeConverted);
@@ -49,9 +76,6 @@ var info = function() {
 
     var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
     console.log("DIFFERENCE IN TIME: " + diffTime);
-
-
-    var frequency = $("#Frequency").val() // frequency of train arrival
 
     var tRemainder = diffTime % frequency;
     console.log(tRemainder);
@@ -63,22 +87,12 @@ var info = function() {
     console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
     nextTrainFormat = moment(nextTrain).format("hh:mm");
-
-    // Code for the push
-    dataRef.ref().push({
-
-        trainName: trainName,
-        destination: destination,
-        firstTime: firstTime,
-        frequency: frequency,
-    });
-
-    //appends everything to the output
+    //end works
 
     trainInfo.append(table)
 
     table.append(header1)
-
+//for loop --- TODO
     header1.append('<th>' + "Train Name" + '</th>') // train name
 
     header1.append('<th>' + "Destination" + '</th>') // stop name
@@ -90,7 +104,7 @@ var info = function() {
     header1.append('<th>' + "Minutes away" + '</th>') // Minutes away
 
     table.append(header2)
-
+//for loop --- TODO
     header2.append('<td>' + trainName + '</td>') // train name
 
     header2.append('<td>' + destination + '</td>') // stop name
@@ -101,27 +115,15 @@ var info = function() {
 
     header2.append('<td>' + nextArrival + '</td>') // Minutes away
 
-//     <table>
-//   <tr>
-//     <td>train name</td>
-//     <td>destination</td>
-//     <td>frequency</td>
-//     <td></td>
-//   </tr>
-//   <tr>
-//     <td>January</td>
-//     <td>$100</td>
-//   </tr>
-// </table>
-
     trainInfo.addClass("trainInfo")
 
     $("#output").append(trainInfo)
+    // Change the HTML to reflect
+    // $("#name-display").text(snapshot.val().name);
+    // $("#email-display").text(snapshot.val().email);
+    // $("#age-display").text(snapshot.val().age);
+    // $("#comment-display").text(snapshot.val().comment);
+  });
 
-    }
-
-     //clears all textboxes
-     $("#trainName").val("");$("#destination").val("");$("#firstTime").val("");$("#Frequency").val("")
-};
 
 $(document).on("click", "#input", info)

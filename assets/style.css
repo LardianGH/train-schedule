@@ -1,30 +1,61 @@
 body {
-    background-color: greenyellow;
+    background-color: silver;
     text-align: center;
+}
+
+#cTime {
+    display: inline-block;
+    background-color: white;
+    border-radius: 25px;
+    width: 240px;
 }
 
 table {
     width: 100%;
     height: 100%;
+    background-color: gray;
+    border-style: ridge;
+    border-color: silver;
 }
 
 #output {
-    border-style: solid;
     margin-left: 60px;
     margin-right: 60px;
     height: 408px;
     width: auto;
     overflow: hidden;
+    background-image: url("../assets/images/wood-texture.jpg");
+}
+
+#inputArea {
+    display: inline-block;
+    background-color: rgb(64, 91, 109);
+    width: 800px;
+    height: 140px;
 }
 
 .trainInfo {
-    border-style: solid;
+    padding: 3px;
     height: 65px;
-    width: 647.5px;
+    width: 645.5px;
     position: relative;
     float: left;
 }
 
 .tBox {
     margin: 8px;
+}
+
+.tLab {
+    color: white;
+}
+
+#input {
+    width: 200px;
+    height: 25px;
+}
+
+.moveForward {
+    position: relative;
+    left: 59px;
 }
